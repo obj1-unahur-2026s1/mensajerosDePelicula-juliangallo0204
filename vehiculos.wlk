@@ -7,9 +7,9 @@ object camion {
     const pesoPropio = 100
 
     method peso() {
-        return pesoPropio + self.pesoAcoplado()
+        return pesoPropio + self.pesoAcoplados()
     }
-    method pesoAcoplado() = acoplados * 500
+    method pesoAcoplados() = acoplados * 500
     method cambiarAcoplados(cantidad) {
         acoplados = (cantidad.max(1)).min(10)
     }

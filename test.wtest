@@ -3,6 +3,7 @@ import paquete.*
 import mensajeros.*
 import celular.*
 import vehiculos.*
+import empresa.*
 
 describe "Tests de mensajeros" {
   test "Roberto puede llevar un paquete que está pago en un camión que tiene un acoplado" {
@@ -33,5 +34,43 @@ describe "Tests de mensajeros" {
     paquete.cambiarDestino(matrix)
     paquete.pagar()
     assert.notThat(paquete.puedeSerEntregado(neo))
+  }
+}
+
+describe "Tests de la empresa de mensajeria" {
+  test "Chuck Norris es contratado en la empresa de mensajeria" {
+    empresaDeMensajeria.contratar(chuckNorris)
+    assert.that(empresaDeMensajeria.contieneMensajero(chuckNorris))
+  }
+  test "Al poco tiempo de ser contratado, Chuck Norris es despedido de la empresa" {
+    empresaDeMensajeria.contratar(chuckNorris)
+    empresaDeMensajeria.despedir(chuckNorris)
+    assert.notThat(empresaDeMensajeria.contieneMensajero(chuckNorris))
+  }
+  test "Todos los mensajeros de la empresa son despedidos" {
+    empresaDeMensajeria.contratar(chuckNorris)
+    empresaDeMensajeria.contratar(roberto)
+    empresaDeMensajeria.despedirATodos()
+    assert.that(empresaDeMensajeria.noTieneEmpleados())
+  }
+  test "Ahora hay 3 empleados en la empresa, por lo que es una empresa grande" {
+    empresaDeMensajeria.contratar(chuckNorris)
+    empresaDeMensajeria.contratar(roberto)
+    empresaDeMensajeria.contratar(neo)
+    assert.that(empresaDeMensajeria.esGrande())
+  }
+  test "Chuck Norris es el primer empleado de la empresa, por lo que puede entregar el paquete a la matrix" {
+    empresaDeMensajeria.contratar(chuckNorris)
+    empresaDeMensajeria.contratar(roberto)
+    empresaDeMensajeria.contratar(neo)
+    paquete.cambiarDestino(matrix)
+    paquete.pagar()
+    assert.that(empresaDeMensajeria.puedeSerEntregadoPorElPrimerEmpleado(paquete))
+  }
+  test "Neo es el último empleado de la empresa, por lo que su peso es 0" {
+    empresaDeMensajeria.contratar(chuckNorris)
+    empresaDeMensajeria.contratar(roberto)
+    empresaDeMensajeria.contratar(neo)
+    assert.that(empresaDeMensajeria.pesoDelUltimoEmpleado() == 0)
   }
 }

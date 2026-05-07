@@ -1,9 +1,37 @@
-import example.pepita
+import destinos.*
+import paquete.*
+import mensajeros.*
+import celular.*
+import vehiculos.*
 
-describe "group of tests for pepita" {
-
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+describe "Tests de mensajeros" {
+  test "Roberto puede llevar un paquete que está pago en un camión que tiene un acoplado" {
+    roberto.cambiarVehiculo(camion)
+    camion.cambiarAcoplados(1)
+    paquete.cambiarDestino(puenteDeBrooklyn)
+    paquete.pagar()
+    assert.that(paquete.puedeSerEntregado(roberto))
   }
-
+  test "Neo con crédito no puede llevar un paquete que no está pago a la matrix" {
+    celular.comprarCredito()
+    paquete.cambiarDestino(matrix)
+    paquete.cancelarPago()
+    assert.notThat(paquete.puedeSerEntregado(neo))
+  }
+  test "Roberto con un camion con 10 acoplados no puede entrar al puente" {
+    roberto.cambiarVehiculo(camion)
+    camion.cambiarAcoplados(10)
+    assert.notThat(puenteDeBrooklyn.puedeEntrar(roberto))
+  }
+  test "Chuck Norris puede entregar un paquete que está pago a la matrix" {
+    paquete.cambiarDestino(matrix)
+    paquete.pagar()
+    assert.that(paquete.puedeSerEntregado(chuckNorris))
+  }
+  test "Neo sin crédito no puede llevar un paquete que está pago a la matrix" {
+    celular.seQuedaSinCredito()
+    paquete.cambiarDestino(matrix)
+    paquete.pagar()
+    assert.notThat(paquete.puedeSerEntregado(neo))
+  }
 }

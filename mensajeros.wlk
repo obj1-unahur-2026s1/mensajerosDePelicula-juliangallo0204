@@ -3,7 +3,7 @@ import celular.*
 
 object roberto {
     var vehiculo = bicicleta
-    const pesoCorporal = 70
+    const pesoCorporal = 90
 
     method peso() {
         return pesoCorporal + vehiculo.peso()
